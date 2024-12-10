@@ -8,6 +8,7 @@ import java.util.*;
  */
 public class Agenda {
     private Set<Event> events = new HashSet<>();
+
     /**
      * Adds an event to this agenda
      *
@@ -24,7 +25,12 @@ public class Agenda {
      * @return a list of events that occur on that day
      */
     public List<Event> eventsInDay(LocalDate day) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        List<Event> eventsOfTheDay = new ArrayList<>();
+        for (Event e : events) {
+            if (e.isInDay(day)) {
+                eventsOfTheDay.add(e);
+            }
+        }
+        return eventsOfTheDay;
     }
 }
