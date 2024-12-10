@@ -28,12 +28,13 @@ public class Agenda {
     public List<Event> eventsInDay(LocalDate day) {
         List<Event> eventsOfTheDay = new ArrayList<>();
         for (Event e : events) {
-            if (e.isInDay(day)) {
+            if (e.isInDay(day)){
                 eventsOfTheDay.add(e);
             }
         }
         return eventsOfTheDay;
     }
+
     /**
      * Trouver les événements de l'agenda en fonction de leur titre
      * @param title le titre à rechercher
@@ -47,4 +48,22 @@ public class Agenda {
         return eventList;
     }
 
+    /**
+     * Déterminer s’il y a de la place dans l'agenda pour un événement
+     * @param e L'événement à tester (on se limitera aux événements simples)
+     * @return vrai s’il y a de la place dans l'agenda pour cet événement
+     */
+    public boolean isFreeFor(Event e) {
+        LocalDateTime eventStart = e.getStart();
+        LocalDateTime eventFin = eventStart.plusMinutes(e.getDuration().toMinutes());
+        for (Event eventInAgenda: events) {
+            LocalDateTime eventInAgendaStart = eventInAgenda.getStart();
+            LocalDateTime eventInAgendaFin = eventInAgendaStart.plusMinutes(e.getDuration().toMinutes());
+            if (eventInAgendaStart.isAfter(eventStart) && eventInAgendaStart.isBefore(eventFin)
+                    || eventInAgendaFin.isAfter(eventStart) && eventInAgendaFin.isBefore(eventFin)
+                    || eventInAgendaStart.isBefore(eventStart) && eventInAgendaFin.isAfter(eventFin)
+                    || eventInAgendaStart.isAfter(eventStart) && eventInAgendaFin.isBefore(eventFin)) return false;
+        }
+        return true;
+    }
 }
