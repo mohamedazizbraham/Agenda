@@ -1,7 +1,6 @@
 package agenda;
 
 import java.time.*;
-import java.time.temporal.ChronoUnit;
 
 public class Event {
 
@@ -9,14 +8,14 @@ public class Event {
      * The myTitle of this event
      */
     private String myTitle;
-    
+
     /**
      * The starting time of the event
      */
     private LocalDateTime myStart;
 
     /**
-     * The durarion of the event 
+     * The durarion of the event
      */
     private Duration myDuration;
 
@@ -34,36 +33,6 @@ public class Event {
         this.myDuration = duration;
     }
 
-    public void setRepetition(ChronoUnit frequency) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
-
-    public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
-
-    public void setTermination(LocalDate terminationInclusive) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
-
-    public void setTermination(long numberOfOccurrences) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
-
-    public int getNumberOfOccurrences() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
-
-    public LocalDate getTerminationDate() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
-    }
-
     /**
      * Tests if an event occurs on a given day
      *
@@ -71,10 +40,24 @@ public class Event {
      * @return true if the event occurs on that day, false otherwise
      */
     public boolean isInDay(LocalDate aDay) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        if(aDay.equals(myStart.toLocalDate())){
+            return true;
+        }
+        for (int i = 1; i < myDuration.toDays(); i++) {
+            if(aDay.equals(myStart.toLocalDate().plusDays(i))) {
+                return true;
+            }
+        }
+        if(aDay.equals(myStart.plusMinutes(myDuration.toMinutes()).toLocalDate())){
+            return true;
+        }
+        return false;
     }
-   
+
+    public String toString(){
+        return "Nom de l'event : " + this.myTitle ;
+    }
+
     /**
      * @return the myTitle
      */
@@ -97,8 +80,5 @@ public class Event {
         return myDuration;
     }
 
-    @Override
-    public String toString() {
-        return "Event{title='%s', start=%s, duration=%s}".formatted(myTitle, myStart, myDuration);
-    }
+
 }
