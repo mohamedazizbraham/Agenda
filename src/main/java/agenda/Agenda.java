@@ -1,6 +1,7 @@
 package agenda;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -33,4 +34,17 @@ public class Agenda {
         }
         return eventsOfTheDay;
     }
+    /**
+     * Trouver les événements de l'agenda en fonction de leur titre
+     * @param title le titre à rechercher
+     * @return les événements qui ont le même titre
+     */
+    public List<Event> findByTitle(String title) {
+        List<Event> eventList = new ArrayList<>();
+        for (Event e: events) {
+            if (e.getTitle().equals(title)) eventList.add(e);
+        }
+        return eventList;
+    }
+
 }
